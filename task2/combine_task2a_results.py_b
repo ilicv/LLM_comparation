@@ -1,0 +1,48 @@
+import os
+import csv
+import re
+from collections import defaultdict
+
+# Folder with CSV result files
+results_folder = "results_task2a"
+output_folder = results_folder  # You can change if you want to save elsewhere
+
+# Group files by language using correct regex
+files_by_lang = defaultdict(list)
+pattern = re.compile(r"^results_(UK|USA|DE|SR)_task2a_(\d+)\.csv$")
+
+# Collect and group files
+for file in os.listdir(results_folder):
+    match = pattern.match(file)
+    if match:
+        lang, num = match.groups()
+        files_by_lang[lang].append((int(num), file))
+
+# Process and merge files
+for lang, files in files_by_lang.items():
+    files.sort()  # Sort by test number
+    output_file = os.path.join(output_folder, f"combined_{lang}_task2a.csv")
+
+    with open(output_file, "w", newline="", encoding="utf-8") as out_csv:
+        writer = csv.writer(out_csv)
+        header_written = False
+
+        for test_num, file_name in files:
+            file_path = os.path.join(results_folder, file_name)
+
+            with open(file_path, "r", encoding="utf-8") as in_csv:
+                reader = csv.reader(in_csv)
+                rows = list(reader)
+
+                if not rows:
+                    continue
+
+                if not header_written:
+                    header = ["test number"] + rows[0]
+                    writer.writerow(header)
+                    header_written = True
+
+                if len(rows) > 1:
+                    writer.writerow([f"{test_num:02d}"] + rows[1])
+
+print("✅ Combined files created successfully.")
