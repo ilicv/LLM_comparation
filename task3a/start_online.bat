@@ -1,0 +1,3 @@
+python task3a_create_jsons.py
+python run_task3a_online_models_grouped.py
+python combine_task3a_results.py

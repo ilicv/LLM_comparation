@@ -1,0 +1,13 @@
+python task1_create_jsons.py
+python run_openai_task1_ollama_models.py
+python run_openai_task1_ollama_models.py
+python run_openai_task1_ollama_models.py
+python run_openai_task1_ollama_models.py
+python run_openai_task1_ollama_models.py
+python run_openai_task1_ollama_models.py
+python run_openai_task1_ollama_models.py
+python run_openai_task1_ollama_models.py
+python run_openai_task1_ollama_models.py
+python run_openai_task1_ollama_models.py
+python combine_task1_results.py
+REM prepare_upload.bat

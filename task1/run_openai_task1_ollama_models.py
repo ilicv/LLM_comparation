@@ -62,15 +62,27 @@ for model_name in MODELS:
                     resp = chat_with_ollama(sys_msg, uq, model=model_name)
                 except Exception as e:
                     print(f"? error: {e}")
-                    answers.append("ERR")
+                    answers.append("ERR1")
                     time.sleep(0.3)
                     continue
 
-                # Strip reasoning and extract first digit 1-7
+                # Strip reasoning and extract first digit 1-5
                 body = resp.split("</think>")[-1] if "</think>" in resp else resp
-                m = re.search(r"\b[1-7]\b", body)
-                ans = m.group(0) if m else "ERR"
+                m = re.search(r"\b[1-5]\b", body)
+                ans = m.group(0) if m else "ERR2"
                 print(ans)
+                if ans == 'ERR2':
+                    #print (resp)
+                    out_path_e = os.path.join(model_dir, f"results_{lang}_task1_{next_i:02d}_ERRORS.csv")
+                    with open(out_path_e, "a", newline="", encoding="utf-8") as outf:
+                        outf.write("---------\n")
+                        outf.write(sys_msg+"\n")
+                        outf.write(uq + "\n") 
+                        outf.write("--\n")
+                        outf.write(resp+"\n")
+                        outf.write(ans+"\n")
+                        outf.write("---------\n")
+
                 answers.append(ans)
                 time.sleep(random.uniform(0.2, 0.5))
 

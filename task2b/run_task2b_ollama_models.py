@@ -63,7 +63,7 @@ for model_name in models:
             try:
                 #response = chat_with_ollama(model_name, system_prompt, question)
                 response = chat_with_ollama(system_prompt=system_prompt, user_prompt=question, model=model_name)
-                match = re.search(r"\b(10|[0-9])\b", response)
+                match = re.search(r"\b(?:[0-9]|10|77|88)\b", response)
                 value = match.group(1) if match else "NA"
             except Exception as e:
                 value = "ERR"

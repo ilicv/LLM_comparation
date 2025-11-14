@@ -1,0 +1,3 @@
+python task42_create_jsons.py
+python run_task42_online_models_grouped.py
+python combine_task42_results.py

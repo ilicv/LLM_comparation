@@ -1,4 +1,4 @@
-# combine_task2b_results.py — adds global upload CSV for Task 2b
+# combine_task2a_results.py — adds global upload CSV for Task 2a
 import os
 import csv
 import re
@@ -9,23 +9,23 @@ from datetime import datetime
 base_folder = "."
 
 # Only process folders matching this pattern
-subfolder_prefix = "results_task2b"
+subfolder_prefix = "results_task2a"
 
-# Match filenames like: results_DE_task2b_01.csv (UK/IE/DE/SR)
-file_pattern = re.compile(r"^results_(UK|IE|DE|SR)_task2b_(\d+)\.csv$")
+# Match filenames like: results_DE_task2a_01.csv (UK/IE/DE/SR)
+file_pattern = re.compile(r"^results_(UK|IE|DE|SR)_task2a_(\d+)\.csv$")
 
 # NEW: global accumulator + upload target
 UPLOAD_DIR = os.path.join(base_folder, "_upload")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
-global_path = os.path.join(UPLOAD_DIR, "results_task2b.csv")
-global_header = ["datetime", "language", "model", "test number", "Q1", "Q2", "Q3"]
+global_path = os.path.join(UPLOAD_DIR, "results_task2a.csv")
+global_header = ["datetime", "language", "model", "test number", "Q1", "Q2", "Q3", "Q4"]
 global_rows = []
 
 def derive_model_name(folder_name: str) -> str:
     """
     Return everything after 'ollama' or 'online' (underscore or hyphen),
-    e.g. 'results_task2b_online_grouped_grok_grok-4' -> 'grok_grok-4'
-         'results_task2b_ollama_qwen2-7b-instruct'   -> 'qwen2-7b-instruct'
+    e.g. 'results_task2a_online_grouped_grok_grok-4' -> 'grok_grok-4'
+         'results_task2a_ollama_qwen2-7b-instruct'   -> 'qwen2-7b-instruct'
     Falls back to the old behavior (last underscore token) if neither is found.
     """
     m = re.search(r'(?:^|_)ollama[_-](.+)$', folder_name)
@@ -59,7 +59,7 @@ for folder_name in os.listdir(base_folder):
     # Merge grouped files per-language (as before)
     for lang, files in files_by_lang.items():
         files.sort()  # Sort by test number
-        output_file = os.path.join(folder_path, f"combined_{lang}_task2b.csv")
+        output_file = os.path.join(folder_path, f"combined_{lang}_task2a.csv")
 
         with open(output_file, "w", newline="", encoding="utf-8") as out_csv:
             writer = csv.writer(out_csv)
@@ -70,6 +70,7 @@ for folder_name in os.listdir(base_folder):
                 # Get file's last modification datetime
                 timestamp = datetime.fromtimestamp(os.path.getmtime(file_path)).strftime("%Y-%m-%d %H:%M:%S")
 
+                print (file_path)
                 with open(file_path, "r", encoding="utf-8") as in_csv:
                     reader = csv.reader(in_csv)
                     rows = list(reader)
@@ -90,15 +91,15 @@ for folder_name in os.listdir(base_folder):
                         # ALSO append to the global upload accumulator
                         # Model = last underscore-separated token from the results folder name
                         model_name = derive_model_name(folder_name)
-                        answers = rows[1][:3]  # Q1..Q3 only
-                        # Pad to exactly 3 in case of malformed file
-                        if len(answers) < 3:
-                            answers = answers + [""] * (3 - len(answers))
+                        answers = rows[1][:4]  # Q1..Q4 only
+                        # Pad to exactly 4 in case of malformed file
+                        if len(answers) < 4:
+                            answers = answers + [""] * (4 - len(answers))
                         global_rows.append([timestamp, lang, model_name, f"{test_num:02d}"] + answers)
 
         print(f"✅ {lang} combined file written to: {output_file}")
 
-# Write the single _upload\results_task2b.csv with all rows
+# Write the single _upload\results_task2a.csv with all rows
 with open(global_path, "w", newline="", encoding="utf-8") as gcsv:
     writer = csv.writer(gcsv)
     writer.writerow(global_header)

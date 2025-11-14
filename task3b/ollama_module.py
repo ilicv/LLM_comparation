@@ -14,4 +14,4 @@ def chat_with_ollama(system_prompt, user_prompt, model="deepseek-r1:8b"):
         return response['message']['content']
     except Exception as e:
         print(f"❌ Ollama call failed: {e}")
-        return "ERR_c"
+        return "ERR"

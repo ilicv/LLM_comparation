@@ -1,0 +1,13 @@
+python task2b_create_jsons.py
+python run_task2b_ollama_models.py
+python run_task2b_ollama_models.py
+python run_task2b_ollama_models.py
+python run_task2b_ollama_models.py
+python run_task2b_ollama_models.py
+python run_task2b_ollama_models.py
+python run_task2b_ollama_models.py
+python run_task2b_ollama_models.py
+python run_task2b_ollama_models.py
+python run_task2b_ollama_models.py
+python combine_task2b_results.py
+REM prepare_upload.bat

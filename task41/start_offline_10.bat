@@ -1,0 +1,13 @@
+python task41_create_jsons.py
+python run_task41_ollama_models.py
+python run_task41_ollama_models.py
+python run_task41_ollama_models.py
+python run_task41_ollama_models.py
+python run_task41_ollama_models.py
+python run_task41_ollama_models.py
+python run_task41_ollama_models.py
+python run_task41_ollama_models.py
+python run_task41_ollama_models.py
+python run_task41_ollama_models.py
+python combine_task41_results.py
+REM prepare_upload.bat

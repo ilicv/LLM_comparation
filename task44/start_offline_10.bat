@@ -1,0 +1,13 @@
+python task44_create_jsons.py
+python run_task44_ollama_models.py
+python run_task44_ollama_models.py
+python run_task44_ollama_models.py
+python run_task44_ollama_models.py
+python run_task44_ollama_models.py
+python run_task44_ollama_models.py
+python run_task44_ollama_models.py
+python run_task44_ollama_models.py
+python run_task44_ollama_models.py
+python run_task44_ollama_models.py
+python combine_task44_results.py
+REM prepare_upload.bat
